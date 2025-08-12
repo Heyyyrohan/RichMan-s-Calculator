@@ -47,32 +47,16 @@ fun Screen(){
     var result by remember { mutableStateOf("") }
 
     val buttons = listOf(
-        listOf("(",")","",""),
-        listOf("AC","^","DEL","/"),
+        listOf("(",")","DEL","/"),
         listOf("7","8","9","*"),
         listOf("4","5","6","-"),
         listOf("1","2","3","+"),
-        listOf("00","0",".","=")
+        listOf("AC","0",".","=")
 
     )
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text("Calculator",
-                    fontSize = 30.sp
-                    )
-                        },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xffE6E7EB),
-                    titleContentColor = Color.Black
-                )
-            )
-        }
-    ) {
-        paddingValues -> Surface(
-        modifier = Modifier.fillMaxSize().padding(paddingValues),
+    Surface(
+        modifier = Modifier.fillMaxSize(),
         color = Color(0xffF3F4F6) // Yellow background
     ) {
 
@@ -97,7 +81,7 @@ fun Screen(){
                 modifier = Modifier.fillMaxWidth().padding(10.dp)
             )
 
-//            Spacer( modifier = Modifier.weight(.8f))
+            Spacer( modifier = Modifier.weight(.8f))
 
             for(row in buttons){
                 Row(
@@ -109,7 +93,7 @@ fun Screen(){
                         val bgcolor = when(symbol){
 
                             "=" -> Color(0xff37D6D2)
-                            "(",")","AC","^","DEL","/","*","-","+" -> Color(0xffE6E7EB)
+                            "(",")","AC","^","DEL","/","*","-","+" ,"."-> Color(0xffE6E7EB)
                             else -> Color(0xffFFFFFF)
 
 
@@ -186,4 +170,3 @@ fun Screen(){
 
     }
     }
-}
