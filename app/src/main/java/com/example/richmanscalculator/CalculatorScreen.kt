@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.richmanscalculator.ui.theme.isValidExpression
 import kotlin.collections.listOf
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,6 +46,7 @@ import kotlin.collections.listOf
 fun Screen(){
     var input by remember  { mutableStateOf("0") }
     var result by remember { mutableStateOf("") }
+    var isPressed by remember { mutableStateOf(false) }
 
     val buttons = listOf(
         listOf("(",")","DEL","/"),
@@ -75,7 +77,10 @@ fun Screen(){
             )
             Text(
                 text = result,
-                fontSize = 35.sp,
+                fontSize =when(isPressed){
+                    true -> 60.sp
+                    else -> 35.sp
+                },
                 color = Color(0xff191919),
                 textAlign = TextAlign.End,
                 modifier = Modifier.fillMaxWidth().padding(10.dp)
@@ -117,14 +122,19 @@ fun Screen(){
                                         "AC" -> {
                                             result =""
                                             input ="0"
-                                            val resultFontSize = 35.sp
-                                            val inputtFontSize = 55.sp
+                                            isPressed = false
+
                                         }
                                         "=" -> {
-                                            result = calculation(input)
-                                            val resultFontSize = 55.sp
-                                            val inputtFontSize = 35.sp
+                                            if (isValidExpression(input)) {
+                                                result = calculation(input)
+                                            } else {
+                                                result = "Invalid Expression"
+                                            }
+                                            input = ""
+                                            isPressed = !isPressed
                                         }
+
                                         "DEL" -> {
                                             when{
                                                 input.length == 1 -> input = "0"
